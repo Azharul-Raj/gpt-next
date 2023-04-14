@@ -4,6 +4,9 @@ import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import LeftBar from './LeftBar/LeftBar'
 import RightBar from './RightBar/RightBar'
+import NewChat from './components/NewChat'
+import ChatTitle from './components/ChatTitle'
+import IconButton from './components/IconButton'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,14 +19,26 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className='grid grid-cols-12'>
-        <div className="col-span-3">
+      <div className="overflow-hidden w-full h-full relative flex">
+        <div className="dark hidden bg-gray-900 md:flex md:w-[260px] md:flex-col">
+          <div className="flex h-full min-h-0 flex-col ">
+            <div className="scrollbar-trigger flex h-full w-full flex-1 items-start border-white/20">
+              <nav className="flex h-full flex-1 flex-col space-y-1 p-2">
+                <LeftBar/>
+              </nav>
+            </div>
+          </div>
+        </div>
+        <RightBar/>
+      </div>
+      {/* <main className='grid grid-cols-12 h-full'>
+        <div className="col-span-3 ">
         <LeftBar/>
         </div>
         <div className="col-span-9">
           <RightBar/>
         </div>
-      </main>
+      </main> */}
     </>
   )
 }
