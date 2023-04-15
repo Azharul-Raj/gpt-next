@@ -1,23 +1,32 @@
 
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import {FiSun,FiZap,FiAlertTriangle,FiSend} from 'react-icons/fi'
-
-export default function RightBar() {
+interface RightBarProps{
+  prompt:string;
+  response:string;
+  setPrompt: React.Dispatch<React.SetStateAction<string>>
+}
+export default function RightBar({setPrompt,prompt,response}:RightBarProps) {
+  
   const handleSubmit=(e:React.ChangeEvent<HTMLFormElement>)=>{
     e.preventDefault();
-    console.log(e.target.data.value)
+    // console.log(e.target.data.value)
+    setPrompt(e.target.data.value)
   }
+  
   return (
     <div className="flex h-full max-w-full flex-1 flex-col">
-      <main className='class="relative h-full w-full transition-width flex flex-col overflow-hidden items-stretch flex-1"'>
+     <main className='class="relative h-full w-full transition-width flex flex-col overflow-hidden items-stretch flex-1"'>
         <div className="flex-1 overflow-hidden">
           <div className="flex flex-col items-center text-sm dark:bg-gray-800">
+            {/* default data */}
             <div className="text-gray-800 w-full md:max-w-2xl lg:max-w-3xl md:h-full md:flex md:flex-col px-6 dark:text-gray-100">
               <h1 className="text-4xl font-semibold text-center mt-6 sm:mt-[20vh] ml-auto mr-auto mb-10 sm:mb-16 flex gap-2 items-center justify-center">
                 Chat GPT
               </h1>
               {/* content container dev */}
               <div className="md:flex items-start text-center gap-3.5">
+               {!prompt && !response&& <>
                 {/* left */}
                 <div className="flex flex-col mb-8 md:mb-auto gap-3.5 flex-1">
                   <div className="flex flex-col mb-8 md:mb-auto gap-3.5 flex-1">
@@ -82,9 +91,20 @@ export default function RightBar() {
                   </div>
                 </div>
                 {/* last finish */}
+                </>}
+                {
+              prompt && response && (
+                <div className="">
+                  <div className="">user:{prompt}</div>
+                  {/* <div className="">gpt:{response}</div> */}
+                </div>
+              )
+            }
               </div>
+              
               <div className="w-full h-32 md:h-48 flex-shrink-0"></div>
             </div>
+            
           </div>
         </div>
         {/* input field div left change to 25 */}
@@ -110,6 +130,7 @@ export default function RightBar() {
         {/* info version section */}
         </div>
       </main>
+
     </div>
   )
 }

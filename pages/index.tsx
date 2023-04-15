@@ -7,10 +7,27 @@ import RightBar from './RightBar/RightBar'
 import NewChat from './components/NewChat'
 import ChatTitle from './components/ChatTitle'
 import IconButton from './components/IconButton'
+import { useEffect, useState } from 'react'
+import HomePage from './HomePage/HomePage'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const [prompt,setPrompt]=useState("");
+  const [response,setResponse]=useState("");
+  const data={
+    prompt
+  }
+  useEffect(()=>{
+    fetch("/api/Backend",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify(data)
+    }).then(res=>res.json())
+    .then(data=>console.log(data)).catch(err=>console.log(err))
+  },[prompt])
   return (
     <>
       <Head>
@@ -19,7 +36,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="overflow-hidden w-full h-full relative flex">
+      {/* <div className="overflow-hidden w-full h-full relative flex">
         <div className="dark hidden bg-gray-900 md:flex md:w-[260px] md:flex-col">
           <div className="flex h-full min-h-0 flex-col ">
             <div className="scrollbar-trigger flex h-full w-full flex-1 items-start border-white/20">
@@ -29,16 +46,9 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <RightBar/>
-      </div>
-      {/* <main className='grid grid-cols-12 h-full'>
-        <div className="col-span-3 ">
-        <LeftBar/>
-        </div>
-        <div className="col-span-9">
-          <RightBar/>
-        </div>
-      </main> */}
+        <RightBar setPrompt={setPrompt} prompt={prompt} response={response}/>
+      </div> */}
+      <HomePage/>
     </>
   )
 }
