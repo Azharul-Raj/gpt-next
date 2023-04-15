@@ -9,25 +9,27 @@ import ChatTitle from './components/ChatTitle'
 import IconButton from './components/IconButton'
 import { useEffect, useState } from 'react'
 import HomePage from './HomePage/HomePage'
+import Sidebar from './components/Sidebar/Sidebar'
+import Main from './Main/Main'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  const [prompt,setPrompt]=useState("");
-  const [response,setResponse]=useState("");
-  const data={
+  const [prompt, setPrompt] = useState("");
+  const [response, setResponse] = useState("");
+  const data = {
     prompt
   }
-  useEffect(()=>{
-    fetch("/api/Backend",{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify(data)
-    }).then(res=>res.json())
-    .then(data=>console.log(data)).catch(err=>console.log(err))
-  },[prompt])
+  // useEffect(() => {
+  //   fetch("/api/Backend", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify(data)
+  //   }).then(res => res.json())
+  //     .then(data => console.log(data)).catch(err => console.log(err))
+  // }, [prompt])
   return (
     <>
       <Head>
@@ -48,7 +50,16 @@ export default function Home() {
         </div>
         <RightBar setPrompt={setPrompt} prompt={prompt} response={response}/>
       </div> */}
-      <HomePage/>
+      <div className="grid grid-cols-12">
+        <div className="col-span-2">
+          <div className="bg-[#202123] max-w-xs overflow-y-auto md:min-w-[20rem]">
+            <Sidebar />
+          </div>
+        </div>
+        <div className="bg-[#343541] col-span-10">
+          <HomePage />
+        </div>
+      </div>
     </>
   )
 }
