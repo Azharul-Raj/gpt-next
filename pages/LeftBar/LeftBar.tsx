@@ -1,5 +1,5 @@
 import ChatTitle from '@/components/ChatTitle'
-import NewChat from '@/components/NewChat'
+import NewChat from '@/components/Sidebar/NewChat'
 import React from 'react'
 import { data } from '../data/data'
 import IconButton from '@/components/IconButton'

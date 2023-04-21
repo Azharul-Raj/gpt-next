@@ -1,8 +1,9 @@
-import SessionProvider from '@/components/SessionProvider'
 import '../styles/globals.css'
-import Sidebar from "@/components/Sidebar/Sidebar"
 import { getServerSession } from "next-auth"
+import SessionProvider from '@/components/SessionProvider'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import Sidebar from '@/components/Sidebar'
+import Login from '@/components/Login'
 
 export const metadata = {
   title: 'Chat GPT Next',
@@ -14,11 +15,22 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const session=await getServerSession(authOptions)
+  const session=await getServerSession(authOptions);
+  if(!session){
+    return (
+      <html>
+        <body>
+          <Login/>
+        </body>
+      </html>
+    )
+  }
+  
+  
   return (
     <html lang="en">
-      <SessionProvider session={session}>
       <body>
+      <SessionProvider session={session}>
         <div className="grid grid-cols-12 h-[100%]">
           <div className="col-span-2">
             <Sidebar/>
@@ -28,8 +40,8 @@ export default async function RootLayout({
         {children}
           </div>
         </div>
-        </body>
         </SessionProvider>
+        </body>
     </html>
   )
 }

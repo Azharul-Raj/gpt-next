@@ -1,15 +1,15 @@
 import React from 'react'
-import NewChat from '../NewChat'
-
+import NewChats from './Sidebar/NewChats'
 
 function Sidebar() {
   return (
     <div className='p-2 flex flex-col h-screen bg-[#202123]'>
       <div className="flex-1">
-        <NewChat/>
+        {/* <NewChat/> */}
+        <NewChats/>
       </div>
     </div>
   )
 }
 
-export default Sidebar
+export default Sidebar;

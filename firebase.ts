@@ -12,6 +12,7 @@ const firebaseConfig={
   messagingSenderId:process.env.messagingSenderId,
   appId:process.env.appId,
 }
+console.log(firebaseConfig);
 
 const app=getApps().length?getApp():initializeApp(firebaseConfig);
 const auth=getAuth(app)
