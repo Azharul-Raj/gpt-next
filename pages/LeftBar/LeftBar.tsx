@@ -1,8 +1,8 @@
+import ChatTitle from '@/components/ChatTitle'
+import NewChat from '@/components/NewChat'
 import React from 'react'
-import NewChat from '../components/NewChat'
-import IconButton from '../components/IconButton'
 import { data } from '../data/data'
-import ChatTitle from '../components/ChatTitle'
+import IconButton from '@/components/IconButton'
 
 export default function LeftBar() {
   return (

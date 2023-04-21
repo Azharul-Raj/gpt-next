@@ -15,7 +15,7 @@ export default function RightBar({setPrompt,prompt,response}:RightBarProps) {
   }
   
   return (
-    <div className="flex h-full max-w-full flex-1 flex-col">
+    <div className="flex h-screen max-w-full flex-1 flex-col">
      <main className='class="relative h-full w-full transition-width flex flex-col overflow-hidden items-stretch flex-1"'>
         <div className="flex-1 overflow-hidden">
           <div className="flex flex-col items-center text-sm dark:bg-gray-800">
