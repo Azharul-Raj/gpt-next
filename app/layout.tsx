@@ -35,7 +35,7 @@ export default async function RootLayout({
           <div className="col-span-2">
             <Sidebar/>
           </div>
-          <div className="col-span-10">
+          <div className="col-span-10 bg-[#343541]">
 
         {children}
           </div>

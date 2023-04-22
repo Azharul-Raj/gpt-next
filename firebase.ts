@@ -1,5 +1,5 @@
 import {getApp,getApps,initializeApp} from 'firebase/app';
-import {getDatabase} from 'firebase/database'
+import { getFirestore } from 'firebase/firestore';
 
 // fire web store configuration
 const firebaseConfig={    
@@ -13,5 +13,5 @@ const firebaseConfig={
 }
 
 const app=getApps().length?getApp():initializeApp(firebaseConfig);
-const db= getDatabase(app);
+const db= getFirestore(app);
 export {db};
