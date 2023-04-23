@@ -2,13 +2,14 @@
 import React,{useState} from 'react'
 import { ChatIdProps, MessageProps } from '@/types/types';
 import { FiSend } from 'react-icons/fi';
-import { serverTimestamp } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { useSession } from 'next-auth/react';
+import { db } from '@/firebase';
 
 function ChatInput({chatId}:ChatIdProps) {
     const [prompt,setPrompt]=useState("");
     const {data:session}=useSession()
-    const handleSubmit=(e: React.FormEvent<HTMLFormElement>)=>{
+    const askGPT=async(e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
         if(!prompt) return;
         
@@ -23,10 +24,22 @@ function ChatInput({chatId}:ChatIdProps) {
             avatar:session?.user?.image! || session?.user?.name!
           }
         }
+        await addDoc(collection(db,"users",session?.user?.email!,"chats",chatId,"message"),message);
+        await fetch("/api/openai",{
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json"
+          },
+          body:JSON.stringify({
+            prompt:input,
+            chatId,
+            session
+          })
+        })
     }
   return (
     <div className="w-full border-t md:border-t-0 dark:border-white/20 md:border-transparent md:dark:border-transparent md:bg-vert-light-gradient bg-white dark:bg-gray-800 md:!bg-transparent dark:md:bg-vert-dark-gradient pt-2">
-          <form onSubmit={handleSubmit}  action="" className="stretch mx-2 flex flex-row gap-3 last:mb-2 md:mx-4 md:last:mb-6 lg:mx-auto lg:max-w-2xl xl:max-w-3xl">
+          <form onSubmit={askGPT}  action="" className="stretch mx-2 flex flex-row gap-3 last:mb-2 md:mx-4 md:last:mb-6 lg:mx-auto lg:max-w-2xl xl:max-w-3xl">
             <div className="relative flex h-full flex-1 md:flex-col">
               <div className="flex ml-1 md:w-full md:m-auto md:mb-2 gap-0 md:gap-2 justify-center"></div>
               {/* textarea div */}

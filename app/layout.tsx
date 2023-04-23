@@ -1,9 +1,9 @@
 import '../styles/globals.css'
 import { getServerSession } from "next-auth"
 import SessionProvider from '@/components/SessionProvider'
-import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import Sidebar from '@/components/Sidebar'
 import Login from '@/components/Login'
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
 
 export const metadata = {
   title: 'Chat GPT Next',
