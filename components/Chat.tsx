@@ -4,7 +4,7 @@ import React from 'react'
 
 function Chat({chatId}:ChatIdProps) {
   return (
-    <div>Chat</div>
+    <div className='flex-1'>Chat</div>
   )
 }
 
