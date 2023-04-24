@@ -24,7 +24,7 @@ function ChatInput({chatId}:ChatIdProps) {
             avatar:session?.user?.image! || session?.user?.name!
           }
         }
-        await addDoc(collection(db,"users",session?.user?.email!,"chats",chatId,"message"),message);
+        await addDoc(collection(db,"users",session?.user?.email!,"chats",chatId,"messages"),message);
         await fetch("/api/openai",{
           method:"POST",
           headers:{
