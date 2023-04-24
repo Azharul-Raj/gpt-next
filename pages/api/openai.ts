@@ -2,6 +2,8 @@
 import admin from 'firebase-admin'
 import query from '@/lib/queryApi';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { adminDb } from '@/firebase.admin';
+import { MessageProps } from '@/types/types';
 
 type Data = {
   name: string
@@ -21,27 +23,45 @@ export default async function handler(
       res.status(400).json({message:"ChatID is not valid"});
       return;
     }
-    const response=await query(prompt,chatId)
+    // const response=await query(prompt,chatId)
+    // console.log("this is prompt",prompt)
+    // console.log("this is response",response)
     // api response part
     // const response = await openai.createCompletion({
     //   model: "text-davinci-003",
-    //   prompt: `I am a highly intelligent question answering bot. If you ask me a question that is rooted in truth, I will give you the answer. If you ask me a question that is nonsense, trickery, or has no clear answer, I will respond with \"Unknown\".\n\nQ: What is human life expectancy in the United States?\nA: Human life expectancy in the United States is 78 years.\n\nQ: Who was president of the United States in 1955?\nA: Dwight D. Eisenhower was president of the United States in 1955.\n\nQ: Which party did he belong to?\nA: He belonged to the Republican Party.\n\nQ: What is the square root of banana?\nA: Unknown\n\nQ: How does a telescope work?\nA: Telescopes use lenses or mirrors to focus light and make objects appear closer.\n\nQ: Where were the 1992 Olympics held?\nA: The 1992 Olympics were held in Barcelona, Spain.\n\nQ: How many squigs are in a bonk?\nA: Unknown\n\nQ:${prompt}`,
-    //   temperature: 0,
+    //   prompt: `${prompt}`,
+    //   temperature: 0.6,
     //   max_tokens: 100,
     //   top_p: 1,
     //   frequency_penalty: 0.0,
     //   presence_penalty: 0.0,
-    //   stop: ["\n"],
     // });
+    // console.log(response.data.choices[0])
+    // res.json(response.data.choices[0].text)
+    const response=await query(prompt,chatId)
     /**
      * message
      */
-    const message={
-      text:response||"Chat GPT is unable to answer",
-      createdAt:admin.firestore.Timestamp.now()
+    const message:MessageProps={
+      text:response ||"Chat GPT is unable to answer",
+      createdAt:admin.firestore.Timestamp.now(),
+      user:{
+        _id:"ChatGPT",
+        name:"ChatGPT",
+        avatar:"https://cdn.pixabay.com/photo/2023/03/06/21/16/artificial-intelligence-7834467__340.jpg"
+      }
     }
+    await adminDb
+    .collection("users")
+    .doc(session?.user?.email)
+    .collection("chats")
+    .doc(chatId)
+    .collection("messages")
+    .add(message)
     // sending response
+    res.status(200).json({answer:message.text})
   } catch (error) {
+    console.log(error)
     res.status(500).json({message:"Something went wrong"})
   }
 }

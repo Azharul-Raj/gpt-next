@@ -3,6 +3,7 @@ import React from 'react'
 import { FiZap,FiSun,FiAlertTriangle } from 'react-icons/fi'
 
 function HomePage() {
+    
   return (
     <div className='flex justify-center flex-col h-screen px-2 text-white items-center '>
         <h1 className="text-5xl font-semibold mb-20">Chat GPT</h1>
