@@ -1,3 +1,4 @@
+"use client"
 import { db } from '@/firebase';
 import { ChatIdProps } from '@/types/types';
 import { collection, orderBy, query } from 'firebase/firestore';
@@ -17,7 +18,7 @@ function Chat({chatId}:ChatIdProps) {
     <div className='flex-1'>
       {
         message?.docs.map((message)=>(
-          <Message key={message.id}/>
+          <Message key={message.id} message={message.data}/>
         ))
       }
     </div>
